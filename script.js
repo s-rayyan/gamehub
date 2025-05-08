@@ -97,7 +97,7 @@ function generateGameLinks(fadeIn = true) {
 
         link.addEventListener("dblclick", () => {
             clearTimeout(clickTimer);
-            const favorites = localStorage.getItem('favorites');
+            const favorites = localStorage.getItem('favorites') ?? "";
             const updatedFavorites = favorites ? favorites.split(',') : [];
             if (!favorites.includes(game.name)) updatedFavorites.push(game.name);
             else updatedFavorites.splice(updatedFavorites.indexOf(game.name), 1);
@@ -105,7 +105,7 @@ function generateGameLinks(fadeIn = true) {
             generateGameLinks(false);
         });
         link.textContent = game.name;
-        link.className = "game-link border-0 text-white" + (localStorage.getItem('favorites').includes(game.name) ? " favorite" : "");
+        link.className = "game-link border-0 text-white" + ((localStorage.getItem('favorites')??"").includes(game.name) ? " favorite" : "");
         link.type = "button"
         container.appendChild(link);
     });
