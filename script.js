@@ -1,6 +1,6 @@
 // List of game names and their URLs
+let favorites = localStorage.getItem("favorites");
 const games = [
-    { name: '1', url: '1' },
     { name: '1v1.LOL', url: '1v1.lol' },
     { name: '10 Minutes Till Dawn', url: '10minutestilldawn' },
     { name: '2048', url: '2048' },
@@ -84,16 +84,38 @@ const games = [
 ];
 
 // Function to create the game links dynamically
-function generateGameLinks() {
+function generateGameLinks(fadeIn = true) {
     const container = document.getElementById('game-links');
+    container.replaceChildren();
     games.forEach(game => {
         const link = document.createElement('button');
-        link.addEventListener("click", ()=>{window.open(game.url)})
+        let clickTimer = null;
+        link.addEventListener("click", () => {
+            clickTimer && clearTimeout(clickTimer);
+            clickTimer = setTimeout(() => window.open(game.url), 300);
+        });
+
+        link.addEventListener("dblclick", () => {
+            clearTimeout(clickTimer);
+            const favorites = localStorage.getItem('favorites');
+            const updatedFavorites = favorites ? favorites.split(',') : [];
+            if (!favorites.includes(game.name)) updatedFavorites.push(game.name);
+            else updatedFavorites.splice(updatedFavorites.indexOf(game.name), 1);
+            localStorage.setItem('favorites', updatedFavorites.join(','));
+            generateGameLinks(false);
+        });
         link.textContent = game.name;
-        link.className = "game-link border-0 text-white";
+        link.className = "game-link border-0 text-white" + (localStorage.getItem('favorites').includes(game.name) ? " favorite" : "");
         link.type = "button"
         container.appendChild(link);
     });
+    if (fadeIn) {
+        $("#game-links").hide();
+        $("#game-links").fadeIn(1000);
+    }
+
+
+
 }
 
 window.onload = generateGameLinks;
