@@ -1,5 +1,3 @@
-document.documentElement.style.setProperty('--bg-color', '#0000FF');
-document.documentElement.style.setProperty('--secondary-color', '#0000FF66');
 const games = [
     { name: '1v1.LOL', url: '1v1.lol' },
     { name: '10 Minutes Till Dawn', url: '10minutestilldawn' },
@@ -35,7 +33,6 @@ const games = [
     { name: 'Fireboy and Watergirl in the Forest Temple', url: 'fireboyandwatergirlintheforesttemple' },
     { name: 'Flappy Bird', url: 'flappybird' },
     { name: 'Friendly Fire', url: 'friendlyfire' },
-    { name: 'Funny Shooter', url: 'funnyshooter' },
     { name: 'Geometry Dash', url: 'geometrydash' },
     { name: 'Gopher Kart', url: 'gopherkart' },
     { name: 'HexGL', url: 'hexgl' },
