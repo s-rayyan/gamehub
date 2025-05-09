@@ -9,6 +9,7 @@ const games = [
     { name: 'Asteroids', url: 'asteroids' },
     { name: 'Astray', url: 'astray' },
     { name: 'Backcountry', url: 'backcountry' },
+    { name: 'Basketball Stars', url: 'basketballstars'},
     { name: 'Bad Ice Cream 2', url: 'badicecream2' },
     { name: 'Basket Random', url: 'basketrandom' },
     { name: 'BitLife', url: 'bitlife' },
