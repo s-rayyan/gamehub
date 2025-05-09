@@ -9,7 +9,7 @@ const games = [
     { name: 'Asteroids', url: 'asteroids' },
     { name: 'Astray', url: 'astray' },
     { name: 'Backcountry', url: 'backcountry' },
-    { name: 'Basketball Stars', url: 'basketballstars'},
+    { name: 'Basketball Stars', url: 'basketballstars' },
     { name: 'Bad Ice Cream 2', url: 'badicecream2' },
     { name: 'Basket Random', url: 'basketrandom' },
     { name: 'BitLife', url: 'bitlife' },
@@ -83,6 +83,23 @@ const games = [
     { name: 'xx142-b2.exe', url: 'xx142b2.exe' }
 ];
 
+document.getElementById("search").addEventListener("input", () => {
+    const query = document.getElementById("search").value.toLowerCase();
+    const gameLinks = document.querySelectorAll("#game-links .game-link");
+    gameLinks.forEach((el, i) => {
+        const gameName = games[i].name.toLowerCase();
+        if (!gameName.includes(query)) {
+            $(el).css("order", 999);
+            $(el).fadeOut();
+
+        } else {
+            $(el).css("order", 1);
+            $(el).fadeIn();
+        }
+    });
+});
+
+
 function generateGameLinks(fadeIn = true) {
     const container = document.getElementById('game-links');
     container.replaceChildren();
@@ -106,6 +123,8 @@ function generateGameLinks(fadeIn = true) {
         link.textContent = game.name;
         link.className = "game-link border-0 text-white" + ((localStorage.getItem('favorites') ?? "").includes(game.name) ? " favorite" : "");
         link.type = "button"
+        link.style.order = 2;
+        link.id = game.url;
         container.appendChild(link);
     });
     if (fadeIn) {
