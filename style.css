@@ -7,9 +7,12 @@
   display: none;
 }
 
-body {
+body, html, .main {
   scrollbar-width: none;
   -ms-overflow-style: none;
+  background-color: var(--bg-color);
+  min-height:100vh;
+  height:100vh;
 }
 
 .game-link {
@@ -20,11 +23,6 @@ body {
   background: none;
 }
 
-.main {
-  background-color: var(--bg-color);
-  overflow: hidden;
-}
-
 .game-link:hover {
   background: var(--secondary-color);
   transform: scale(1.1);
@@ -32,7 +30,7 @@ body {
 }
 
 .favorite {
-  order: -1;
+  order: 1 !important;
   background: var(--secondary-color);
 }
 

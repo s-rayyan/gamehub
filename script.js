@@ -89,11 +89,10 @@ document.getElementById("search").addEventListener("input", () => {
     gameLinks.forEach((el, i) => {
         const gameName = games[i].name.toLowerCase();
         if (!gameName.includes(query)) {
-            $(el).css("order", 999);
             $(el).fadeOut();
-
+            $(el).css("order", 4);
         } else {
-            $(el).css("order", 1);
+            $(el).css("order", 2);
             $(el).fadeIn();
         }
     });
@@ -123,7 +122,7 @@ function generateGameLinks(fadeIn = true) {
         link.textContent = game.name;
         link.className = "game-link border-0 text-white" + ((localStorage.getItem('favorites') ?? "").includes(game.name) ? " favorite" : "");
         link.type = "button"
-        link.style.order = 2;
+        link.style.order = 3;
         link.id = game.url;
         container.appendChild(link);
     });
