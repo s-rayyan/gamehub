@@ -1,5 +1,5 @@
-// List of game names and their URLs
-let favorites = localStorage.getItem("favorites");
+document.documentElement.style.setProperty('--bg-color', '#0000FF');
+document.documentElement.style.setProperty('--secondary-color', '#0000FF66');
 const games = [
     { name: '1v1.LOL', url: '1v1.lol' },
     { name: '10 Minutes Till Dawn', url: '10minutestilldawn' },
@@ -79,13 +79,12 @@ const games = [
     { name: 'Vex 6', url: 'vex6' },
     { name: 'Vex 7', url: 'vex7' },
     { name: 'Volley Random', url: 'volleyrandom' },
-    { name: 'Webretro (retro console emulator)', url: 'webretro' },
+    { name: 'Webretro', url: 'webretro' },
     { name: 'World\'s Hardest Game', url: 'worldshardestgame' },
     { name: 'World\'s Hardest Game 2', url: 'worldshardestgame2' },
     { name: 'xx142-b2.exe', url: 'xx142b2.exe' }
 ];
 
-// Function to create the game links dynamically
 function generateGameLinks(fadeIn = true) {
     const container = document.getElementById('game-links');
     container.replaceChildren();
@@ -107,7 +106,7 @@ function generateGameLinks(fadeIn = true) {
             generateGameLinks(false);
         });
         link.textContent = game.name;
-        link.className = "game-link border-0 text-white" + ((localStorage.getItem('favorites')??"").includes(game.name) ? " favorite" : "");
+        link.className = "game-link border-0 text-white" + ((localStorage.getItem('favorites') ?? "").includes(game.name) ? " favorite" : "");
         link.type = "button"
         container.appendChild(link);
     });
