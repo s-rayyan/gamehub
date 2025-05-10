@@ -190,12 +190,14 @@ $('#button-slider').on('input', function () {
     buttonSize = $(this).val();
     generateGameLinks(false);
     $("#game-links").removeClass("gap-" + oldButtonSize).addClass("gap-" + (Number(buttonSize) + 1));
+    $("#game-links").removeClass("fs-" + oldButtonSize).addClass("fs-" + 5 - (Number(buttonSize) * 2));
+
 
 });
 
 $(document).ready(function () {
     $('#settings-toggle').on('click', function () {
-        $('#settings-panel').slideToggle(300); // Slide open/close
+        $('#settings-panel').slideToggle(300);
     });
 
     $('#close-settings').on('click', function () {
