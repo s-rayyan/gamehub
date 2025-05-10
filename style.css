@@ -3,6 +3,7 @@
     --secondary-color: #ff9b11;
 }
 
+
 ::-webkit-scrollbar {
     display: none;
 }
@@ -67,6 +68,10 @@ html,
     z-index: 999;
 }
 
+/* .header {
+    position: sticky;
+    top: 0;
+} */
 
 
 @keyframes bounce {

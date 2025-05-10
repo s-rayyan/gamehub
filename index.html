@@ -39,16 +39,19 @@
     <input type="range" min="1" max="3" value="2" step="1" class="w-100 custom-range" id="button-slider">
   </div>
 
-
-  <div class="main p-5 d-flex justify-content-center gap-3 flex-column">
-    <div class="d-flex justify-content-center gap-3 flex-column header mt-3">
-      <div class="h1 text-center text-white">Rayyan's Game Hub</div>
-      <div class="h6 text-center h5 text-muted mb-0">Click to play double click to favorite and unfavorite</div>
-      <input type="text" class="form-control rounded-3 bg-transparent border-0 shadow-lg w-50 align-self-center"
-        placeholder="Search" id="search">
+  <div class="main p-5 d-flex flex-column gap-3">
+    <div class="header d-flex flex-column align-items-center gap-2">
+      <div class="h1 text-white text-center">Rayyan's Game Hub</div>
+      <div class="h6 h5 text-muted text-center mb-0">Click to play double click to favorite and unfavorite</div>
+      <input type="text" class="form-control rounded-3 bg-transparent border-0 shadow-lg w-50" placeholder="Search"
+        id="search">
     </div>
-    <div id="game-links" class="d-flex flex-wrap gap-3 m-3 mt-5"></div>
+
+    <div id="game-links" class="d-flex flex-wrap gap-3"></div>
   </div>
+
+
+
 
   <script src="script.js"></script>
 </body>
