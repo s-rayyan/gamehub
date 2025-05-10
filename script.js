@@ -33,6 +33,7 @@ const games = [
     { name: 'Factory Balls Forever', url: 'factoryballsforever' },
     { name: 'Fireboy and Watergirl in the Forest Temple', url: 'fireboyandwatergirlintheforesttemple' },
     { name: 'Flappy Bird', url: 'flappybird' },
+    { name: 'Funny Shooter 2', url: 'funnyshooter' },
     { name: 'Friendly Fire', url: 'friendlyfire' },
     { name: 'Geometry Dash', url: 'geometrydash' },
     { name: 'Gopher Kart', url: 'gopherkart' },
@@ -58,6 +59,7 @@ const games = [
     { name: 'Riddle School 4', url: 'riddleschool4' },
     { name: 'Riddle School 5', url: 'riddleschool5' },
     { name: 'Roadblocks', url: 'roadblocks' },
+    { name: 'Rooftop Snipers', url: 'rooftopsnipers' },
     { name: 'Sleeping Beauty', url: 'sleepingbeauty' },
     { name: 'Slope', url: 'slope' },
     { name: 'Snake', url: 'snake' },
@@ -83,6 +85,8 @@ const games = [
     { name: 'xx142-b2.exe', url: 'xx142b2.exe' }
 ];
 
+var buttonSize = 2
+
 document.getElementById("search").addEventListener("input", () => {
     const query = document.getElementById("search").value.toLowerCase();
     const gameLinks = document.querySelectorAll("#game-links .game-link");
@@ -98,8 +102,15 @@ document.getElementById("search").addEventListener("input", () => {
     });
 });
 
-
 function generateGameLinks(fadeIn = true) {
+    const bg = localStorage.getItem("bg-color");
+    const sec = localStorage.getItem("secondary-color");
+    if (bg !== null) {
+        const jbg = JSON.parse(bg);
+        const jsec = JSON.parse(sec);
+        document.documentElement.style.setProperty('--bg-color', HSLToHex(jbg.h, jbg.s, jbg.l));
+        document.documentElement.style.setProperty('--secondary-color', HSLToHex(jsec.h, jsec.s, jsec.l));
+    }
     const container = document.getElementById('game-links');
     container.replaceChildren();
     games.forEach(game => {
@@ -117,10 +128,11 @@ function generateGameLinks(fadeIn = true) {
             if (!favorites.includes(game.name)) updatedFavorites.push(game.name);
             else updatedFavorites.splice(updatedFavorites.indexOf(game.name), 1);
             localStorage.setItem('favorites', updatedFavorites.join(','));
-            generateGameLinks(false);
+            $(link).addClass("new-favorite");
+            setTimeout(() => { generateGameLinks(false) }, 1000);
         });
         link.textContent = game.name;
-        link.className = "game-link border-0 text-white" + ((localStorage.getItem('favorites') ?? "").includes(game.name) ? " favorite" : "");
+        link.className = "game-link border-0 text-white p-" + buttonSize + ((localStorage.getItem('favorites') ?? "").includes(game.name) ? " favorite" : "");
         link.type = "button"
         link.style.order = 3;
         link.id = game.url;
@@ -130,9 +142,65 @@ function generateGameLinks(fadeIn = true) {
         $("#game-links").hide();
         $("#game-links").fadeIn(1000);
     }
-
-
-
 }
+
+function hexToHSL(hex) {
+    let [r, g, b] = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255);
+    let max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h = 0, s, l = (max + min) / 2;
+    if (max !== min) {
+        let d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        h = {
+            [r]: (g - b) / d + (g < b ? 6 : 0),
+            [g]: (b - r) / d + 2,
+            [b]: (r - g) / d + 4
+        }[max] / 6;
+    } else s = 0;
+    return { h: h * 360, s: s * 100, l: l * 100 };
+}
+
+function HSLToHex(h, s, l) {
+    s /= 100; l /= 100;
+    let c = (1 - Math.abs(2 * l - 1)) * s;
+    let x = c * (1 - Math.abs((h / 60) % 2 - 1));
+    let m = l - c / 2;
+    let [r, g, b] = [[c, x, 0], [x, c, 0], [0, c, x], [0, x, c], [x, 0, c], [c, 0, x]][Math.floor(h / 60) % 6];
+    [r, g, b] = [r, g, b].map(v => Math.round((v + m) * 255));
+    return `#${(1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1).toUpperCase()}`;
+}
+
+function updateColors(h) {
+    let base = getComputedStyle(document.documentElement).getPropertyValue('--bg-color').trim();
+    let hsl = hexToHSL(base);
+    if (h !== undefined) hsl.h = h;
+    let sec = { ...hsl, l: Math.min(hsl.l + 10, 100) };
+    document.documentElement.style.setProperty('--bg-color', HSLToHex(hsl.h, hsl.s, hsl.l));
+    document.documentElement.style.setProperty('--secondary-color', HSLToHex(sec.h, sec.s, sec.l));
+    localStorage.setItem("bg-color", JSON.stringify(hsl));
+    localStorage.setItem("secondary-color", JSON.stringify(sec));
+}
+
+$('#color-slider').on('input', function () {
+    updateColors($(this).val() * 3.6 + 30);
+});
+
+$('#button-slider').on('input', function () {
+    let oldButtonSize = buttonSize;
+    buttonSize = $(this).val();
+    generateGameLinks(false);
+    $("#game-links").removeClass("gap-" + oldButtonSize).addClass("gap-" + (Number(buttonSize) + 1));
+
+});
+
+$(document).ready(function () {
+    $('#settings-toggle').on('click', function () {
+        $('#settings-panel').slideToggle(300); // Slide open/close
+    });
+
+    $('#close-settings').on('click', function () {
+        $('#settings-panel').fadeOut(300);
+    });
+});
 
 window.onload = generateGameLinks;
