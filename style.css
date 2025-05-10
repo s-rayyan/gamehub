@@ -13,7 +13,7 @@
 }
 
 .custom-range::-webkit-slider-runnable-track {
-    background-color: var(--secondary-color);
+    background-color: var(--bg-color);
     border-radius: 10px;
 }
 
@@ -68,6 +68,13 @@ html,
     z-index: 999;
 }
 
+.bg {
+    background-color: var(--bg-color)
+}
+
+.bg-light-secondary {
+    background-color: var(--secondary-color)
+}
 /* .header {
     position: sticky;
     top: 0;
